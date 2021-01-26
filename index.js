@@ -5,10 +5,9 @@ const bodyParser = require('body-parser');
 const { User } = require("./models/User");
 const config = require('./config/key');
 
-// app/x-www-form-urlencoded 분석
-app.use(bodyParser.urlencoded({extended: true}));
-// app/json타입분석
 app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const mongoose = require('mongoose');
 mongoose.connect(config.mongoURI, { 
@@ -19,15 +18,15 @@ mongoose.connect(config.mongoURI, {
 }).then(() => console.log('MongoDB Connected..')).catch(err => console.log(err))
 
 app.get('/', (req, res) => {
-  res.send('Hello World!1')
+  res.send('Hello World!')
 });
 
 app.post("/register", (req, res) => {
 
-  const user = new User(req.body);
+  const user = new User(req.body)
 
   user.save((err, userInfo) => {
-    if(err) return res.json({ success: false, err })
+    if (err) return res.json({ success: false, err })
     return res.status(200).json({
       success: true
     })
